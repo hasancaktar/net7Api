@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "fkxCpVDhqoVpMcHXt45xHpHOKeorN2GsWxuPCmQxXMs=",
+  "Source": "net7Api",
+  "BasePath": "_content/net7Api",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
