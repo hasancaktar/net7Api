@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System.Net;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using net7Api.Business.Abstract;
 using net7Api.Entity;
@@ -18,30 +20,40 @@ namespace net7Api.Controllers
         public IActionResult GetAll()
         {
            var result =  _customerService.GetAll();
-            return Ok(result);
+           if(result is null)
+               return NotFound("Faild");
+           return Ok(result);
         }
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
             var result = _customerService.GetById(id);
+            if (result is null)
+                return NotFound("Faild");
             return Ok(result);
         }
         [HttpPost]
         public IActionResult Add(Customer customer)
         {
             _customerService.Add(customer);
+            if (Response.StatusCode!=200)
+                return NotFound("Faild");
             return Ok(_customerService.GetAll());
         }
         [HttpPut("{id}")]
         public IActionResult Update(int id, Customer customer)
         {
             _customerService.Update(id, customer);
+            if (Response.StatusCode != 200)
+                return NotFound("Faild");
             return Ok(_customerService.GetAll());
         }
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
             _customerService.Delete(id);
+            if (Response.StatusCode != 200)
+                return NotFound("Faild");
             return Ok(_customerService.GetAll());
         }
     }
