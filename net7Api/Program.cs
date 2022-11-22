@@ -1,5 +1,6 @@
 using net7Api.Business.Abstract;
 using net7Api.Business.Concrete;
+using net7Api.DataAccess.EntityFramework;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<ICustomerService, CustomerManager>();
+builder.Services.AddDbContext<DataContext>();
 
 var app = builder.Build();
 

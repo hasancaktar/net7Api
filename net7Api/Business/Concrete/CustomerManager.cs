@@ -1,4 +1,5 @@
 ﻿using net7Api.Business.Abstract;
+using net7Api.DataAccess.EntityFramework;
 using net7Api.Entity;
 
 namespace net7Api.Business.Concrete
@@ -33,36 +34,47 @@ namespace net7Api.Business.Concrete
                 BirthDate = DateTime.Now
             }
         };
+
+        private DataContext _dataContext;
+        public CustomerManager(DataContext dataContext)
+        {
+            _dataContext = dataContext;
+        }
         public List<Customer> GetAll()
         {
-            return customers.ToList();
+            var result = _dataContext.Customers.ToList();
+            return result;
         }
 
         public Customer GetById(int id)
         {
-            var result = customers.FirstOrDefault(x => x.Id == id);
+            var result = _dataContext.Customers.Find(id);
             return result;
         }
 
         public void Update(int id, Customer customer)
         {
-            var result = customers.Find(x => x.Id == id);
+            var result = _dataContext.Customers.Find(id);
           //  result.Id = customer.Id;
             result.Name=customer.Name;
             result.Surname=customer.Surname;
             result.City=customer.City;
             result.BirthDate=customer.BirthDate;
+            _dataContext.SaveChanges();
         }
 
         public void Delete(int id)
         {
-            var result = customers.Find(x => x.Id == id);
-            customers.Remove(result);
+            var result = _dataContext.Customers.Find(id);
+            _dataContext.Customers.Remove(result);
+            _dataContext.SaveChanges();
         }
 
         public void Add(Customer customer)
         {
-            customers.Add(customer);
+
+            _dataContext.Customers.Add(customer);
+            _dataContext.SaveChanges(); 
         }
     }
 }
