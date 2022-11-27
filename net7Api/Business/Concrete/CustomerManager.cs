@@ -52,29 +52,45 @@ namespace net7Api.Business.Concrete
             return result;
         }
 
-        public void Update(int id, Customer customer)
+        public bool Update(int id, Customer customer)
         {
+            
             var result = _dataContext.Customers.Find(id);
-          //  result.Id = customer.Id;
-            result.Name=customer.Name;
-            result.Surname=customer.Surname;
-            result.City=customer.City;
-            result.BirthDate=customer.BirthDate;
-            _dataContext.SaveChanges();
+            if (result != null)
+            {
+                result.Name = customer.Name;
+                result.Surname = customer.Surname;
+                result.City = customer.City;
+                result.BirthDate = customer.BirthDate;
+                _dataContext.SaveChanges();
+                return true;
+            }
+
+            return false;
+
         }
 
         public void Delete(int id)
         {
             var result = _dataContext.Customers.Find(id);
+
+
             _dataContext.Customers.Remove(result);
             _dataContext.SaveChanges();
+
+
+
+
+
         }
 
         public void Add(Customer customer)
         {
+            var result = _dataContext.Customers.Add(customer);
 
-            _dataContext.Customers.Add(customer);
-            _dataContext.SaveChanges(); 
+            if(result != null)
+            _dataContext.SaveChanges();
+
         }
     }
 }

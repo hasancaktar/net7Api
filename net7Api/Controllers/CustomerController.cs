@@ -33,22 +33,53 @@ namespace net7Api.Controllers
         [HttpPost]
         public IActionResult Add(Customer customer)
         {
-            _customerService.Add(customer);
-            if (Response.StatusCode!=200)
-                return NotFound("Faild");
-            return Ok(_customerService.GetAll());
+
+            try
+            {
+                _customerService.Add(customer);
+                return Ok(_customerService.GetAll());
+
+            }
+            catch (Exception e)
+            {
+                return BadRequest("Girilen Id Geçersiz - "+e.Message);
+            }
+            
+          
         }
         [HttpPut("{id}")]
         public IActionResult Update(int id, Customer customer)
         {
-            _customerService.Update(id, customer);
+           var result= _customerService.Update(id, customer);
+            if (result==false)
+                return BadRequest("Girilen Id Geçersiz");
             return Ok(_customerService.GetAll());
+
+
+
+
+
+
+
+
         }
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            _customerService.Delete(id);
-            return Ok(_customerService.GetAll());
+
+            try
+            {
+                _customerService.Delete(id);
+                return Ok(_customerService.GetAll());
+
+            }
+            catch (Exception e)
+            {
+                return BadRequest("Girilen Id Null");
+            }
+            
+               
+            
         }
     }
 }

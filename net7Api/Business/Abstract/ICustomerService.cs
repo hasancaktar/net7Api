@@ -6,7 +6,7 @@ namespace net7Api.Business.Abstract
     {
         List<Customer> GetAll();
         Customer GetById(int id);
-        void Update(int id , Customer customer);
+        bool Update(int id , Customer customer);
         void Delete(int id);
         void Add(Customer customer);
     }
